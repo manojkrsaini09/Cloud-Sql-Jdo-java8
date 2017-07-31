@@ -6,7 +6,7 @@
 	<packaging>war</packaging>
 	<version>1.0-SNAPSHOT</version>
 	<groupId>com.example.appengine</groupId>
-	<artifactId>cloud-sql-hello-world</artifactId>
+	<artifactId>cloud-sql-java8</artifactId>
 
 	<properties>
 		<appengine.app.id>metacampus-in</appengine.app.id>
