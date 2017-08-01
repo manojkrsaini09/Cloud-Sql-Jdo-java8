@@ -11,9 +11,12 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 import javax.jdo.listener.StoreCallback;
 
+import org.datanucleus.api.jdo.annotations.MultiTenant;
+
 
 @PersistenceCapable
-public class Student implements StoreCallback{
+@MultiTenant(column="TENANT", columnLength=24)
+public class Student {
       
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -32,7 +35,7 @@ public class Student implements StoreCallback{
 	private List<Parent> parents;
 	
 	
-	@Persistent
+	/*@Persistent
 	private int tenantId;
 	
 	public int getTenantId() {
@@ -42,7 +45,7 @@ public class Student implements StoreCallback{
 	public void setTenantId(int tenantId) {
 		this.tenantId = tenantId;
 	}
-
+*/
 	public int getStudentId() {
 		return studentId;
 	}
@@ -82,10 +85,9 @@ public class Student implements StoreCallback{
 				+ ", lastName=" + lastName + ", parent=" + parents.toString() + "]";
 	}
 
-	@Override
-	public void jdoPreStore() {
+	/*public void jdoPreStore() {
 		 PersistenceManager pm = JDOHelper.getPersistenceManager (this);
 		 this.tenantId = (Integer)pm.getUserObject();		
-	}
+	}*/
 	
 }

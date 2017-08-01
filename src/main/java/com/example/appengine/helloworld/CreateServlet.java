@@ -3,6 +3,7 @@
 package com.example.appengine.helloworld;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,19 +32,25 @@ public class CreateServlet extends HttpServlet {
 			return; // ignore the request for favicon.ico
 		}
 
-		storeStudent("DummyStudentFirstName", "DummyStudentLastName", "DummyParentFirstName", "DummyParentLastName", 333);
-		storeStudent("DummyStudentFirstName1", "DummyStudentLastName1", "DummyParentFirstName1", "DummyParentLastName1", 555);
+		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Demo");
+		PersistenceManager pm = pmf.getPersistenceManager();
+		System.out.println("Supported Properties:"+pm.getSupportedProperties());
+		PrintWriter out = resp.getWriter();
+		out.println("Supported Properties:"+pm.getSupportedProperties());
+		storeStudent("DummyStudentFirstName", "DummyStudentLastName", "DummyParentFirstName", "DummyParentLastName", "333");
+		storeStudent("DummyStudentFirstName1", "DummyStudentLastName1", "DummyParentFirstName1", "DummyParentLastName1", "555");
 		
 	}
 	
-	public void storeStudent(String firstName, String lastName, String parentFirstName, String parentLastName, int tanentId){
+	public void storeStudent(String firstName, String lastName, String parentFirstName, String parentLastName, String tanentId){
 
 		PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("Demo");
 
 		PersistenceManager pm = pmf.getPersistenceManager();
+		
+		pm.setProperty("datanucleus.tenantID","333");
 		Transaction tx = pm.currentTransaction();
-		pm.setUserObject(tanentId);
-
+		//pm.setUserObject(tanentId);
 		Student student = new Student();
 		student.setFirstName(firstName);
 		student.setLastName(lastName);
